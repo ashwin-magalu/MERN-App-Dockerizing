@@ -1,5 +1,7 @@
 # Dockerize a Node.js app with VS Code
 
+## docker pull ashwin2604/mern
+
 1. Setup:
 
    a. mkdir test-node-app && cd test-node-app && npm init -y && code .
