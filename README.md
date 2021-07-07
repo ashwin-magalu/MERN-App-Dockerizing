@@ -1,10 +1,12 @@
 # Dockerize a Node.js app with VS Code
 
 1. Setup:
+
    a. mkdir test-node-app && cd test-node-app && npm init -y && code .
    b. npm i express
 
 2. Create basic Node app:
+
    a. Open package.json file and modify it like this: Check the file
 
    b. Now add new file with name server.js: Check the file
@@ -12,11 +14,13 @@
    c. npm start
 
 3. Prepare Docker file:
+
    a. touch Dockerfile
 
    b. touch .dockerignore
 
    c. Add below code in Dockerfile:
+   
    FROM node:8
    //Create app directory
    WORKDIR /usr/src/app
@@ -30,15 +34,18 @@
    CMD [ "npm", "start" ]
 
    d. Add below code in .dockerignore:
+   
    node_modules
    npm-debug.log
 
 4. Build an Docker image:
+
    a. docker build -t test-node-app .
    b. docker images
    c. If you want to remove an image run this: docker rmi <image id>
 
 5. Run Docker container (finally):
+   
    a. Now we run our container and map 8080 port to 49165:  
    docker run -p 49165:8080 -d test-node-app
 
@@ -53,16 +60,20 @@
 # Dockerize a Node.js app connected to MongoDb
 
 1. Install MongoDb locally:
+   
    a. npm i mongoose
    b. npm install --save-dev nodemon
 
 2. Connect to MongoDb through Express app:
+   
    a. Create files: User.model.js and connection.js
 
 3. Implement read and write to MongoDb:
+   
    Now it's time to test! 🔍 Open in browser this link http://localhost:8080/user-create to create a dummy user record in db. Open this link http://localhost:8080/users to get all users as JSON in browser.
 
 4. Dockerize Node and MongoDb:
+   
    a. Now create another file called docker-compose.yml in api's root directory:
    version: "2"
    services:
@@ -81,6 +92,7 @@
 # Dockerize a React app with Node.js backend connected to MongoDb
 
 1. Dockerize React app:
+   
    a. In ui folder create a .dockeringore file and Dockerfile file:
    FROM node:14.16.0
    // Create app directory
@@ -102,9 +114,11 @@
    e. docker stop <container id>
 
 2. Call api from React app:
+   
    a. npm i axios in ui and npm i cors in api
 
 3. Run React and Node together in Docker:
+   
    a. remove docker-compose.yml from directory api and create docker-compose.yml in root folder:
    version: '2'
    services:
@@ -125,6 +139,7 @@
    b. docker-compose up --build --> from root folder
 
 4. Use React production build:
+   
    a. We simply need to change our Dockerfile in ui project. We will start a production build and serve it using nginx server.
    b. Since we now expose port 80, we need to change it from 3000 to 80 in docker-compose.yml.
    c. Run: docker-compose up --build
